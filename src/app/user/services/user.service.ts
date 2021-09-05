@@ -9,20 +9,19 @@ import {Observable} from 'rxjs';
 })
 export class UserService {
 
-  // URL_USERS = 'https://my-json-server.typicode.com/thiagolima08/planeerrija/users/';
-  URL_USERS =  'https://plannerrijabackend.herokuapp.com/';
-  // URL_USERS = 'http://localhost:3000/users/';
+  URL_USERS =  'https://findmypetapi.herokuapp.com/';
 
   constructor(private httpClient: HttpClient) {}
 
   registerUser(user: User): Observable<User>  {
     const body: User = {
       name: user.name,
+      email: user.email,
       password: user.password,
-      email: user.email
+      confirm_password: user.confirm_password,
     };
-    const reqHeader = new HttpHeaders({'No-Auth': 'True'});
-    return this.httpClient.post<User>(this.URL_USERS + 'employee', body, {headers : reqHeader});
+    const reqHeader = new HttpHeaders({'Content-Type': 'application/json', 'No-Auth': 'True'});
+    return this.httpClient.post<User>(this.URL_USERS + 'user', body, {headers : reqHeader});
   }
 
   userAuthentication(userEmail, password): Observable<User>  {

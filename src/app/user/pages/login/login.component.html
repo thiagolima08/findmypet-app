@@ -1,0 +1,30 @@
+<section>
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div class="form-container">
+      <mat-card-title>Login</mat-card-title>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <br>
+      <div style="display: flex; flex-direction: row;">
+        <button mat-raised-button type="submit" style="background-color: #EE5E52;color: white;width: 100px;" [disabled]="!form.valid">
+          Entrar
+        </button>
+        <button mat-button (click)="redirect()" type="button" style="width: 100px;margin-left: 10px;">
+          Voltar
+        </button>
+     </div>
+    </div>
+  </form>
+  <br>
+</section>

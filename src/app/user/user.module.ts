@@ -4,14 +4,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component';
-import { LabelModule } from "@progress/kendo-angular-label";
-import { InputsModule } from "@progress/kendo-angular-inputs";
+import { LoginComponent } from './pages/login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    SignUpComponent,
   ],
   exports: [
     LoginComponent
@@ -27,8 +28,7 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    InputsModule,
-    LabelModule,
+    MaterialModule
   ]
 })
 export class UserModule { }
