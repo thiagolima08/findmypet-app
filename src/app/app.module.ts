@@ -1,16 +1,16 @@
-import { UserModule } from './user/user.module';
-import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { CredentialsComponent } from './credentials/credentials.component';
 import { HomeComponent } from './home/home.component';
 import { MaterialModule } from './material.module';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
-import { AuthInterceptor } from './auth/auth.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CredentialsComponent } from './credentials/credentials.component';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -24,13 +24,14 @@ import { CredentialsComponent } from './credentials/credentials.component';
     AppRoutingModule,
     UserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    NgxSpinnerModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  }],
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

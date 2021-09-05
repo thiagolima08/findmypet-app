@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { MaterialModule } from '../material.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MaterialModule } from '../material.module';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    NgxSpinnerModule
   ]
 })
 export class UserModule { }

@@ -24,10 +24,10 @@ export class UserService {
     return this.httpClient.post<User>(this.URL_USERS + 'user', body, {headers : reqHeader});
   }
 
-  userAuthentication(userEmail, password): Observable<User>  {
+  userAuthentication(email, password): Observable<User>  {
     const data = {
-      email: userEmail,
-      password
+      email: email,
+      password: password
     };
     const reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', 'No-Auth': 'True' });
     return this.httpClient.post<User>(this.URL_USERS + 'session', data, { headers: reqHeader });

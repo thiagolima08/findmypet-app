@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
 
@@ -19,7 +20,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(private router: Router, 
               private service: UserService, 
-              private fb: FormBuilder,) {}
+              private fb: FormBuilder,
+              private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -32,14 +34,21 @@ export class SignUpComponent implements OnInit {
 
   public submitForm(): void {
     this.userNew = this.form.value;
+    this.spinner.show();
     this.service.registerUser(this.userNew).subscribe(
       user => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 3000);
         console.log(user);
         alert('Cadastro realizado com sucesso!');
         this.router.navigate(['/login']);
         this.form.reset();
       },
     (err: HttpErrorResponse) => {
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 3000);
         this.Error = true;
       });
   }
