@@ -1,0 +1,85 @@
+<mat-toolbar
+  style="
+    background-color: #ee5e52;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  "
+>
+<div style="display: flex; flex-direction: row;align-items: center;">
+  <button mat-icon-button type="button" (click)="isExpanded = !isExpanded">
+    <mat-icon style="color: white">menu</mat-icon>
+  </button>
+  <span style="color: white;">Find My Pet</span>
+</div>
+  <div class="logout" style="grid-column: 3;justify-self: end;">
+    <button mat-button (click)="anunciar()" style="color: white; background-color: #4b4b5b">
+      Anunciar
+    </button>
+    <button
+      mat-button
+      matTooltip="Logout"
+      (click)="logout()"
+      style="margin-left: 10px"
+    >
+      <mat-icon style="color: white">logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav
+    #sidenav
+    class="example-sidenav"
+    mode="side"
+    opened="true"
+    (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()"
+  >
+    <mat-nav-list>
+      <mat-list-item (click)="showSubmenu = !showSubmenu" class="parent">
+        <span class="full-width" *ngIf="isExpanded || isShowing"
+          >Menu</span
+        >
+        <mat-icon mat-list-icon>home</mat-icon>
+        <mat-icon
+          class="menu-button"
+          [ngClass]="{ rotated: showSubmenu }"
+          *ngIf="isExpanded || isShowing"
+          >expand_more</mat-icon
+        >
+      </mat-list-item>
+      <div
+        class="submenu"
+        [ngClass]="{ expanded: showSubmenu }"
+        *ngIf="isShowing || isExpanded"
+      >
+        <a mat-list-item (click)="home()">Home</a>
+        <mat-list-item
+          (click)="showSubSubMenu = !showSubSubMenu"
+          class="parent"
+        >
+          <span class="full-width" *ngIf="isExpanded || isShowing"
+            >Postagens</span
+          >
+          <mat-icon
+            class="menu-button"
+            [ngClass]="{ rotated: showSubSubMenu }"
+            *ngIf="isExpanded || isShowing"
+            >expand_more</mat-icon
+          >
+        </mat-list-item>
+        <div
+          class="submenu"
+          [ngClass]="{ expanded: showSubSubMenu }"
+          *ngIf="isShowing || isExpanded"
+        >
+          <a mat-list-item (click)="myPosts()">Minhas Postagens</a>
+        </div>
+      </div>
+    </mat-nav-list>
+    <mat-nav-list> </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="example-sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>

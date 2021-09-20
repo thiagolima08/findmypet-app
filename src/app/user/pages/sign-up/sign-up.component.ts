@@ -66,7 +66,7 @@ export class SignUpComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.spinner.hide();
-        this.openSnackBar(err.message, 'error-snackbar');
+        this.openSnackBar(err.error, 'error-snackbar');
         this.Error = true;
       }
     );

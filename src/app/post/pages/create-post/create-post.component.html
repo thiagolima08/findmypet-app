@@ -1,0 +1,53 @@
+<section>
+  <ngx-spinner>
+    <p style="font-size: 20px; color: white">Carregando...</p>
+  </ngx-spinner>
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div class="form-container">
+      <mat-card-title>Anúncio</mat-card-title>
+      <br />
+      <mat-form-field appearance="outline">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="outline">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <br />
+      <div style="display: flex; flex-direction: column; justify-content: center;align-items: center;">
+        <input
+          type="file"
+          class="file-input"
+          (change)="onFileSelected($event)"
+          #fileUpload
+        />
+
+        <div class="file-upload">
+          {{ fileName || "Nenhuma imagem carregada." }}
+
+          <button
+            mat-mini-fab
+            style="background-color: #4b4b5b;"
+            type="button"
+            class="upload-btn"
+            (click)="fileUpload.click()"
+          >
+            <mat-icon>attach_file</mat-icon>
+          </button>
+        </div>
+        <br />
+        <button
+          mat-raised-button
+          type="submit"
+          style="background-color: #ee5e52; color: white; width: 200px"
+          [disabled]="!form.valid"
+        >
+          Enviar
+        </button>
+      </div>
+    </div>
+  </form>
+  <br />
+</section>

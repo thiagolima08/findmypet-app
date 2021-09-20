@@ -1,19 +1,24 @@
+import { PaginaNaoEncontradaComponent } from './layouts/pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CredentialsComponent } from './credentials/credentials.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './user/pages/login/login.component';
-import { SignUpComponent } from './user/pages/sign-up/sign-up.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
-  { path: 'sign-up', component: SignUpComponent},
-  { path: '', component: CredentialsComponent},
-  { path: 'home', component: HomeComponent},
+  {
+    path: '',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+  },
+  {
+    path: '**',
+    component: PaginaNaoEncontradaComponent
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
