@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthGuard } from '../auth/auth.guard';
 import { MaterialModule } from '../material.module';
 import { CreatePostComponent } from '../post/pages/create-post/create-post.component';
 import { PostComponent } from '../post/pages/post/post.component';
@@ -24,6 +25,10 @@ import { HomeRoutingModule } from './home-routing.module';
     FormsModule,
     MaterialModule,
     NgxSpinnerModule,
+  ],
+
+  providers:[
+    AuthGuard
   ]
 })
 export class HomeModule { }

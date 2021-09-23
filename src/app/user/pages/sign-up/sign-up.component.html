@@ -19,6 +19,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Senha</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <mat-error *ngIf="form.get('password').invalid">Senha deve ter mais de 6 caracteres</mat-error>
         <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
@@ -27,6 +28,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Confirme sua senha</mat-label>
         <input matInput [type]="hide_confirm_password ? 'password' : 'text'" formControlName="confirm_password">
+        <mat-error *ngIf="form.get('confirm_password').invalid">Senha deve ter mais de 6 caracteres</mat-error>
         <button type="button" mat-icon-button matSuffix (click)="hide_confirm_password = !hide_confirm_password" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide_confirm_password ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
