@@ -1,14 +1,22 @@
 <section>
-    <mat-card class="post-card">
+    <mat-card class="post-card" style="width: 60vw;" *ngFor="let post of posts">
         <mat-card-header>
-            <mat-card-title style="font-size: 16px;">{{post.title}}</mat-card-title>
+          <img mat-card-lg-image [src]="post.image_url">
+          <div style="margin-top: 50px;margin-left: 20px;">
+            <mat-card-title style="font-size: 28px;">{{post.title}}</mat-card-title>
             <mat-card-subtitle style="margin-bottom: 30px;">
+              <mat-chip-list aria-label="Post Status">
+                <mat-chip *ngIf="post.status==='missing'" color="warn" selected>{{post.status==='missing' ? 'Perdido':''}}</mat-chip>
+                <mat-chip *ngIf="post.status!=='missing'" color="primary" selected>{{post.status!=='missing' ? 'Encontrado':''}}</mat-chip>
+              </mat-chip-list>
             </mat-card-subtitle>
+          </div>
         </mat-card-header>
         <br>
         <mat-card-content>
-          <p>{{post.description}}</p>
+          <p style="font-size: 16px;">{{post.description}}</p>
         </mat-card-content>
+        <app-comments></app-comments>
     </mat-card>
   </section>
   

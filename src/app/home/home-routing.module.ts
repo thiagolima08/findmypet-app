@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 import { CreatePostComponent } from '../post/pages/create-post/create-post.component';
+import { EditPostComponent } from '../post/pages/edit-post/edit-post.component';
 import { PostComponent } from '../post/pages/post/post.component';
 import { PostsComponent } from '../post/pages/posts/posts.component';
 import { HomeComponent } from './components/home.component';
@@ -28,11 +29,16 @@ const routes: Routes = [
       path: 'post/:id',
       component: PostComponent
     },
+    {
+      path: 'edit-post/:id',
+      component: EditPostComponent
+    },
   ]},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class HomeRoutingModule { }

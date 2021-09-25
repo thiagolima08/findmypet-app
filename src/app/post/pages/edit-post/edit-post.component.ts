@@ -2,40 +2,67 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Post } from '../../models/Post';
 import { PostService } from '../../services/post.service';
 
+interface Status {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
-  selector: 'app-create-post',
-  templateUrl: './create-post.component.html',
-  styleUrls: ['./create-post.component.css']
+  selector: 'app-edit-post',
+  templateUrl: './edit-post.component.html',
+  styleUrls: ['./edit-post.component.css']
 })
-export class CreatePostComponent implements OnInit {
-  form: FormGroup;
+export class EditPostComponent implements OnInit {
+  public form: FormGroup;
   postNew: Post;
   Error = false;
   hide = true;
   hide_confirm_password = true;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  formData = new FormData();
+  id: String;
+  post: Post;
+  status: Status[] = [
+    {value: 'missing', viewValue: 'Desaparecido'},
+    {value: 'found', viewValue: 'Encontrado'}
+  ];
+
   fileName = '';
 
-
   constructor(private router: Router,
+    private route: ActivatedRoute,
     private service: PostService,
     private fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.searchPost()
+    this.loadForm()
+  }
+
+  loadForm(){
     this.form = this.fb.group({
+      id:[this.id],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      status: [null],
       file: [null]
     });
+  }
+
+  async searchPost(){
+    this.id = this.route.snapshot.params.id;
+    await this.service.getPost(this.id).toPromise().then(p => this.post = p["post"]).catch(err=>console.error(err));
+    this.form.get('title').setValue(this.post.title)
+    this.form.get('description').setValue(this.post.description)
+    this.form.get('title').updateValueAndValidity()
+    this.form.get('description').updateValueAndValidity()
   }
 
   openSnackBar(msg: string, className: string) {
@@ -47,8 +74,9 @@ export class CreatePostComponent implements OnInit {
   }
 
   public submitForm(): void {
+    this.postNew = this.form.value;
     this.spinner.show();
-    this.service.createPost(this.formData).subscribe(
+    this.service.updatePost(this.postNew).subscribe(
       (post) => {
         this.spinner.hide();
         console.log(post);
@@ -70,9 +98,12 @@ export class CreatePostComponent implements OnInit {
   onFileSelected(event) {
     const file:File = event.target.files[0];
     this.fileName = file.name
-    this.formData.append("file",file)
-    this.formData.append("title",this.form.get('title').value)
-    this.formData.append("description",this.form.get('description').value)
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = () => {
+        this.form.get("file").setValue(reader.result);
+        this.form.get("file").updateValueAndValidity();
+    };
   }
 
 }

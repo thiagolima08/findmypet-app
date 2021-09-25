@@ -13,13 +13,20 @@ export class PostService {
   URL =  'https://findmypetapi.herokuapp.com/post';
   token = localStorage.getItem('userToken')
 
-  createPost(post: Post): Observable<Post>  {
+  createPost(post): Observable<Post>  {
+    const body = post;
+    const reqHeader = new HttpHeaders({'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${this.token}`});
+    return this.httpClient.post<Post>(this.URL, body);
+  }
+
+  updatePost(post: Post): Observable<Post>  {
     const body: Post = {
       title: post.title,
       description: post.description,
+      status: post.status
     };
     const reqHeader = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`});
-    return this.httpClient.post<Post>(this.URL + 'post', body, {headers : reqHeader});
+    return this.httpClient.put<Post>(`${this.URL}/${post.id}`, body, {headers : reqHeader});
   }
 
   getPosts(): Observable<Post[]> {
@@ -30,5 +37,10 @@ export class PostService {
   getPost(id): Observable<Post> {
     const reqHeader = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`});
     return this.httpClient.get<Post>(`${this.URL}/${id}`, {headers : reqHeader});
+  }
+
+  getPostOfUser(): Observable<Post[]> {
+    const reqHeader = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}`});
+    return this.httpClient.get<Post[]>(`${this.URL}/user`, {headers : reqHeader});
   }
 }

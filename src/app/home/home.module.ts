@@ -9,13 +9,15 @@ import { PostComponent } from '../post/pages/post/post.component';
 import { PostsComponent } from '../post/pages/posts/posts.component';
 import { HomeComponent } from './components/home.component';
 import { HomeRoutingModule } from './home-routing.module';
+import { EditPostComponent } from '../post/pages/edit-post/edit-post.component';
+import { CommentsComponent } from '../comments/comments/comments.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     PostsComponent, 
     CreatePostComponent, 
-    PostComponent
+    PostComponent, EditPostComponent, CommentsComponent
   ],
 
   imports: [

@@ -1,0 +1,30 @@
+<section>
+    <ngx-spinner>
+        <p style="font-size: 20px; color: white">Carregando...</p>
+      </ngx-spinner>
+    <br />
+    <form [formGroup]="form" (ngSubmit)="submitForm()" style="display: flex;flex-direction: column;">
+        <mat-form-field appearance="outline">
+            <mat-label>Comentário</mat-label>
+            <textarea matInput formControlName="comment_text"></textarea>
+        </mat-form-field>
+        <button
+            mat-raised-button
+            type="submit"
+            style="background-color: #ee5e52; color: white; width: 100px;"
+            [disabled]="!form.valid"
+        >
+            Enviar
+        </button>
+    </form>
+    <br />
+    <mat-card class="example-card">
+        <div *ngFor="let comment of comments">
+            <mat-card-title style="font-size: 18px;">{{comment?.author.author_name}}</mat-card-title>
+            <mat-divider inset></mat-divider>
+            <mat-card-content>
+              <p>{{ comment?.comment_text }}</p>
+            </mat-card-content>
+        </div>
+   </mat-card>
+</section>
