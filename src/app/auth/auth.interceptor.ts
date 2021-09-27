@@ -17,10 +17,10 @@ export class AuthInterceptor implements HttpInterceptor {
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
-              errorMessage = 'Credenciais inválidas, tente novamente.';
+              errorMessage = 'Algum campo inválido, verifique e tente novamente.';
           }else {
             // server-side error
-            errorMessage = 'Credenciais inválidas, tente novamente.';
+            errorMessage = error.error['message'];
           }
           return throwError(errorMessage);
         })
